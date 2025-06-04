@@ -11,14 +11,14 @@ import java.util.List;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
-public class DummyPacoteController {
+public class PacoteController {
     private final DummyPacoteService dummyPacoteService;
 
-    public DummyPacoteController(DummyPacoteService dummyPacoteService){
+    public PacoteController(DummyPacoteService dummyPacoteService){
         this.dummyPacoteService = dummyPacoteService;
     }
 
-    @RequestMapping(method = GET, path = "/pacotes/**")
+    @RequestMapping(method = GET, path = "/pacotes")
     public ResponseEntity<List<PacoteDTO>> obterTodos(){
         List<PacoteDTO> pacotes = dummyPacoteService.obterTodos();
         return ResponseEntity.ok(pacotes);
