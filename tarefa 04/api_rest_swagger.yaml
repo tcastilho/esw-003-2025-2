@@ -1,0 +1,483 @@
+openapi: 3.0.3
+info:
+  title: API de Pacotes
+  description: API REST para gerenciamento de pacotes de viagem
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Dev test
+tags:
+  - name: Pacotes
+    description: endpoints das operações de Pacotes
+paths:
+  /api/v1/pacotes:
+    get:
+      tags:
+      - Pacotes
+      summary: Listar pacotes de viagem
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 0
+          description: Número da página (começa em 0)
+          required: false
+        - in: query
+          name: size
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+          description: Quantidade de itens por página (padrão 20)
+          required: false
+        - in: query
+          name: localidade
+          schema:
+            type: string
+            pattern: '^[0-9a-fA-F-]{36}$'
+          description: Filtrar por ID da localidade
+          required: false
+        - in: query
+          name: descricao
+          schema:
+            type: string
+            minLength: 3
+            maxLength: 255
+          description: Filtrar por parte da descrição do pacote
+          required: false
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PacotePageResponse'
+              examples:
+                exemplo:
+                  value:
+                    content:
+                      - descricao: lorem ipsum dolor
+                        localidade:
+                          descricao: Rua dos Gabs
+                        itens:
+                          - preco: 140.5
+                            companiaAerea: British Airways
+                            numeroVoo: BA246
+                          - preco: 140.5
+                            nomeHotel: John Doe Hotel
+                            endereco: Rua do Gab 123
+                          - preco: 140.5
+                            marca: Subaru
+                            modelo: Imprenza WRTX STI
+                    page: 0
+                    size: 20
+                    totalElements: 1
+                    totalPages: 1
+        '404':
+            description: Nenhum resultado retornado.
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorResponse'
+                examples:
+                  exemplo:
+                    value:
+                      message: "Nenhum pacote foi encontrado"
+                      cause: "Os termos de busca não correspondem a nenhum pacote cadastrado"
+      security:
+        - bearerAuth: []
+    post:
+      tags:
+      - Pacotes
+      summary: Criar pacote de viagem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PacoteRequest'
+            examples:
+              exemplo:
+                value:
+                    descricao: lorem ipsum dolor
+                    localidade:
+                      descricao: Rua dos Gabs
+                    itens:
+                      - preco: 140.5
+                        companiaAerea: British Airways
+                        numeroVoo: BA246
+                      - preco: 140.5
+                        nomeHotel: John Doe Hotel
+                        endereco: Rua do Gab 123
+                      - preco: 140.5
+                        marca: Subaru
+                        modelo: Imprenza WRTX STI
+      responses:
+        '201':
+          description: Pacote criado com sucesso.
+        '400':
+          description: Requisição inválida, pacote não foi criado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                exemplo:
+                  value:
+                    message: "Dados obrigatórios ausentes ou inválidos."
+                    cause: "O campo 'descricao' não pode ser vazio."
+      security:
+        - bearerAuth: []
+  /api/v1/pacotes/{id}:
+    get:
+      tags:
+      - Pacotes
+      summary: Visualizar pacote de viagem
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Id do pacote
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PacoteResponse'
+              examples:
+                exemplo:
+                  value:
+                    descricao: lorem ipsum dolor
+                    localidade:
+                      descricao: Rua dos Gabs
+                    itens:
+                      - preco: 140.5
+                        companiaAerea: British Airways
+                        numeroVoo: BA246
+                      - preco: 140.5
+                        nomeHotel: John Doe Hotel
+                        endereco: Rua do Gab 123
+                      - preco: 140.5
+                        marca: Subaru
+                        modelo: Imprenza WRTX STI
+        '404':
+          description: Pacote não encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                exemplo:
+                  value:
+                    message: "Pacote não encontrado."
+                    cause: "O id informado não corresponde a nenhum pacote cadastrado."
+      security:
+        - bearerAuth: []
+    put:
+      tags:
+      - Pacotes
+      summary: Alterar pacote de viagem
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Id do pacote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PacoteRequest'
+            examples:
+              exemplo:
+                value:
+                    descricao: lorem ipsum dolor
+                    localidade:
+                      descricao: Rua dos Kurts 138
+                    itens:
+                      - preco: 140.5
+                        companiaAerea: Air France
+                        numeroVoo: AF0002
+                      - preco: 140.5
+                        nomeHotel: Allori Hotel
+                        endereco: Rua dos Kurts 138
+                      - preco: 134.5
+                        marca: Honda
+                        modelo: Civic Type-R
+      responses:
+        '200':
+          description: Pacote atualizado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PacoteResponse'
+              examples:
+                exemplo:
+                  value:
+                    descricao: lorem ipsum dolor
+                    localidade:
+                      descricao: Rua dos Kurts 138
+                    itens:
+                      - itemtype: transladoAereo
+                        preco: 140.5
+                        companiaAerea: Air France
+                        numeroVoo: AF0002
+                      - itemtype: hospedagem
+                        preco: 140.5
+                        nomeHotel: Allori Hotel
+                        endereco: Rua dos Kurts 138
+                      - itemtype: locacaoVeiculo
+                        preco: 134.5
+                        marca: Honda
+                        modelo: Civic Type-R
+        '400':
+          description: Requisição inválida, pacote não atualizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                exemplo:
+                  value:
+                    message: "Requisição inválida."
+                    cause: "Algum dos itens do campo 'itens' é inválido"
+        '404':
+          description: Pacote não encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                exemplo:
+                  value:
+                    message: "Pacote não encontrado."
+                    cause: "O id informado não corresponde a nenhum pacote cadastrado."
+        '409':
+          description: Conflito entre pacotes.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                exemplo:
+                  value:
+                    message: "Conflito ao processar a requisição."
+                    cause: "${campo}"
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+      - Pacotes
+      summary: Remover pacote de viagem
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Id do pacote
+      responses:
+        '204':
+          description: Pacote removido com sucesso.
+          content: {}
+        '404':
+          description: Pacote não encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                exemplo:
+                  value:
+                    message: "Pacote não encontrado."
+                    cause: "O id informado não corresponde a nenhum pacote cadastrado."
+      security:
+        - bearerAuth: []
+components:
+  schemas:
+    PacoteRequest:
+      type: object
+      properties:
+        descricao:
+          type: string
+          minLength: 3
+          maxLength: 255
+          description: Nome ou descrição resumida do pacote de viagem (mínimo 3, máximo 255 caracteres)
+        localidade:
+          type: string
+          description: UUID da localidade de destino do pacote
+          pattern: '^[0-9a-fA-F-]{36}$'
+        itens:
+          type: array
+          items:
+            type: string
+            pattern: '^[0-9a-fA-F-]{36}$'
+            description: Lista de UUIDs dos itens que compõem o pacote (translado aéreo, hospedagem, locação de veículo)
+          minItems: 1
+      required:
+        - descricao
+        - localidade
+        - itens
+    PacoteResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          pattern: '^[0-9a-fA-F-]{36}$'
+          description: UUID do pacote
+          readOnly: true
+        descricao:
+          type: string
+          minLength: 3
+          maxLength: 255
+          description: Nome ou descrição resumida do pacote de viagem
+        localidade:
+          $ref: '#/components/schemas/Localidade'
+          description: Localidade de destino do pacote
+        itens:
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/TransladoAereo'
+              - $ref: '#/components/schemas/Hospedagem'
+              - $ref: '#/components/schemas/LocacaoVeiculo'
+          minItems: 1
+          description: Lista detalhada dos itens que compõem o pacote
+    Localidade:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          pattern: '^[0-9a-fA-F-]{36}$'
+          description: UUID da localidade
+        descricao:
+          type: string
+          minLength: 3
+          maxLength: 255
+          description: Nome ou descrição da localidade
+    LocacaoVeiculo:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          pattern: '^[0-9a-fA-F-]{36}$'
+          description: UUID da locação de veículo
+        itemType:
+          type: string
+          enum: [locacaoVeiculo]
+          description: Tipo do item (sempre 'locacaoVeiculo')
+        preco:
+          type: number
+          format: double
+          minimum: 0
+          description: Preço da locação do veículo
+        marca:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Marca do veículo
+        modelo:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Modelo do veículo
+    TransladoAereo:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          pattern: '^[0-9a-fA-F-]{36}$'
+          description: UUID do translado aéreo
+        itemType:
+          type: string
+          enum: [transladoAereo]
+          description: Tipo do item (sempre 'transladoAereo')
+        preco:
+          type: number
+          format: double
+          minimum: 0
+          description: Preço do translado aéreo
+        companiaAerea:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Nome da companhia aérea
+        numeroVoo:
+          type: string
+          minLength: 1
+          maxLength: 20
+          description: Número do voo
+    Hospedagem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          pattern: '^[0-9a-fA-F-]{36}$'
+          description: UUID da hospedagem
+        itemType:
+          type: string
+          enum: [hospedagem]
+          description: Tipo do item (sempre 'hospedagem')
+        preco:
+          type: number
+          format: double
+          minimum: 0
+          description: Preço da hospedagem
+        nomeHotel:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Nome do hotel
+        endereco:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: Endereço do hotel
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Mensagem de erro amigável para o usuário
+        cause:
+          type: string
+          description: Causa detalhada do erro, útil para depuração
+    PacotePageResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/PacoteResponse'
+          description: Lista de pacotes retornados na página
+        page:
+          type: integer
+          description: Número da página retornada (começa em 0)
+        size:
+          type: integer
+          description: Quantidade de itens por página retornada
+        totalElements:
+          type: integer
+          description: Total de pacotes encontrados para os filtros aplicados
+        totalPages:
+          type: integer
+          description: Total de páginas disponíveis para os filtros aplicados
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
