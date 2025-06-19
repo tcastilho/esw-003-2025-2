@@ -1,12 +1,20 @@
-<html>
+<html lang="pt-BR">
     <head>
         <title>Tarefa</title>
+        <meta charset="UTF-8"/>
         <link rel="stylesheet" href="main.css">
         <script type="module" src="main.js"></script>
     </head>
     <body>
-        <div id="placeholder"></div>
-        <button id="botao">Carregar</button>
+        <div class="table-header">
+            <h2>Listar Pacotes de Viagem</h2>
+            <button id="botao" class="btn">Carregar</button>
+        </div>
+        <div class="table-container">
+            <table id="table"></table>
+        </div>
+
+
         <script type="module">
             import {onLoadPacotes} from './main.js'
 

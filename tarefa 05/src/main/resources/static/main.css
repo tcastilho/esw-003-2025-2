@@ -1,0 +1,44 @@
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.table-container th,
+.table-container td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.table-container th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  color: #333;
+}
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 0 10px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 500;
+  background-color: #e7e7e7;
+  color: black;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+
+}
+
+.btn:hover {
+    background-color: #dcdcdc;
+}
+
+
