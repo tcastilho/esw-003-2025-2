@@ -20,8 +20,6 @@ function App() {
     }
   });
 
-  console.log(pacotesObj)
-
   return (
     <Container>
       <Table title={title} data={pacotesObj} columns={columns}/>
