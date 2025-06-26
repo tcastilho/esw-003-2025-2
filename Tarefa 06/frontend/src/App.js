@@ -1,15 +1,21 @@
 import { useState } from 'react';
-import Button from './Button.js';
-import Pacotes from './Pacotes.js';
+import Button from './components/Button.js';
+import Pacotes from './components/Pacotes.js';
+import TableHeader from './components/TableHeader.js';
 
 
 function App() {
   const [dados, setData] = useState([]);
-
+  const title = 'Listar Pacotes de Viagem'
   return (
     <>
-      <Pacotes dados={dados}/>
-      <Button setData={setData}/>
+      <TableHeader title={title}>
+        <Button setData={setData}/>
+      </TableHeader>
+
+      <div>
+        <Pacotes dados={dados}/>
+      </div>
     </>
   );
 }
