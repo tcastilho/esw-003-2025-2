@@ -16,12 +16,12 @@ function App() {
       descricao: pacote.descricao,
       cidade: pacote.localidade.descricao,
       hotel: pacote.items[0].nomeHotel,
-      preco: precoTotal.toFixed(2)
+      preco: String(`R$\u00A0${precoTotal.toFixed(2)}`)
     }
   });
 
   console.log(pacotesObj)
-  
+
   return (
     <Container>
       <Table title={title} data={pacotesObj} columns={columns}/>
