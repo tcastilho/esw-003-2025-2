@@ -56,9 +56,9 @@ function Table (props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {data && data.map((item, keyIndex) => (
+                    {data && data.map((pacote, keyIndex) => (
                         <tr key={keyIndex}>
-                            {Object.values(item).map((item, keyIndex) =>(
+                            {Object.values(pacote).map((item, keyIndex) =>(
                                 <td key={keyIndex}>{item}</td>
                             ))}
                         </tr>
