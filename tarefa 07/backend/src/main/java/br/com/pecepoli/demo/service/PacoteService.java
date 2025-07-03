@@ -17,4 +17,6 @@ public class PacoteService {
     public List<Pacote> obterPacotes() {
         return this.repository.findAll();
     }
+
+    public List<Pacote> obterPacotesPorTermo(String termo) {return this.repository.findDescLocLike(termo);}
 }

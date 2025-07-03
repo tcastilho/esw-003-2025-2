@@ -4,10 +4,10 @@ package br.com.pecepoli.demo.controller;
 import br.com.pecepoli.demo.domain.Pacote;
 import br.com.pecepoli.demo.repository.PacoteRepository;
 import br.com.pecepoli.demo.service.PacoteService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,8 +22,16 @@ public class PacoteController {
         this.pacoteService = pacoteService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/pacotes")
-    public List<Pacote> obterTodos() {
-        return this.pacoteService.obterPacotes();
+    @GetMapping("/pacotes")
+    public ResponseEntity<List<Pacote>> obterPacotes(@RequestParam(value="q", required = false) String termo){
+        List<Pacote> pacotes;
+
+        if(termo != null && !termo.isEmpty()){
+            pacotes = pacoteService.obterPacotesPorTermo(termo);
+            return ResponseEntity.ok(pacotes);
+        }
+
+        pacotes = pacoteService.obterPacotes();
+        return ResponseEntity.ok(pacotes);
     }
 }
