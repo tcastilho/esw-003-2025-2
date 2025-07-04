@@ -1,5 +1,6 @@
 
 import styled from 'styled-components';
+import debounce from 'lodash.debounce'
 
 const SearchWrapper = styled.div`
     display: flex;
@@ -26,7 +27,8 @@ const InnerInput = styled.input`
 function Criteria(props) {
   const {setCriteria} = props;
 
-  const onCriteriaChange = (e) => setCriteria(e.target.value);
+  const doCriteriaChange = (e) => setCriteria(e.target.value);
+  const onCriteriaChange = debounce(doCriteriaChange, 500);
 
   return (
     <SearchWrapper>
