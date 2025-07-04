@@ -22,16 +22,10 @@ public class PacoteController {
         this.pacoteService = pacoteService;
     }
 
-    @GetMapping("/pacotes")
-    public ResponseEntity<List<Pacote>> obterPacotes(@RequestParam(value="q", required = false) String termo){
+    @RequestMapping(method = RequestMethod.GET, value = "/pacotes")
+    public ResponseEntity<List<Pacote>> obterPacotes(@RequestParam(value="q", required = false) String criteria){
         List<Pacote> pacotes;
-
-        if(termo != null && !termo.isEmpty()){
-            pacotes = pacoteService.obterPacotesPorTermo(termo);
-            return ResponseEntity.ok(pacotes);
-        }
-
-        pacotes = pacoteService.obterPacotes();
+        pacotes = pacoteService.obterPacotes(criteria);
         return ResponseEntity.ok(pacotes);
     }
 }

@@ -12,7 +12,6 @@ import java.util.UUID;
 
 @Repository
 public interface PacoteRepository extends JpaRepository<Pacote, UUID> {
-
-    @Query("SELECT p FROM Pacote p WHERE LOWER(p.descricao) LIKE LOWER(CONCAT('%', :termo, '%')) OR LOWER(p.localidade.descricao) LIKE LOWER(CONCAT('%', :termo, '%'))")
-    List<Pacote> findDescLocLike(@Param("termo") String termo);
+    @Query("SELECT p FROM Pacote p WHERE LOWER(p.descricao) LIKE LOWER(CONCAT('%', :criteria, '%')) OR LOWER(p.localidade.descricao) LIKE LOWER(CONCAT('%', :criteria, '%'))")
+    List<Pacote> findAll(@Param("criteria") String criteria);
 }
