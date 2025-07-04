@@ -2,7 +2,6 @@ package br.com.pecepoli.demo.domain;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.UuidGenerator;
 
 import java.sql.Types;
 import java.util.UUID;
@@ -17,17 +16,23 @@ public class Localidade {
     @GeneratedValue(generator = "ulid_generator")
     private UUID id;
 
-    @Column(name = "DESCRICAO")
-    private String descricao;
+    @Column(name = "CIDADE")
+    private String cidade;
 
-    public String getDescricao() { return descricao; }
+    @Column(name = "ESTADO")
+    private String estado;
 
-    public void setDescricao(String descricao) {this.descricao = descricao; }
+    public String getCidade() { return cidade; }
+    public String getEstado() { return estado; }
+
+    public void setCidade(String cidade) {this.cidade = cidade; }
+    public void setEstado(String estado) {this.estado = estado; }
 
     @Override
     public String toString() {
         return "Localidade{" +
-                "descricao='" + descricao + '\'' +
+                "cidade='" + cidade +"," + '\'' +
+                "estado='" + estado + '\'' +
                 '}';
     }
 }
