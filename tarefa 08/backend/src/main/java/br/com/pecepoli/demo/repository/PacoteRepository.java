@@ -18,7 +18,7 @@ public interface PacoteRepository extends JpaRepository<Pacote, UUID> {
     @Query("select p.id from Pacote p")
     Page<UUID> findIds(Pageable pageable);
 
-    @Query("select p.id from Pacote p where p.descricao like :criteria or p.localidade.cidade like :criteria")
+    @Query("select p.id from Pacote p where lower(p.descricao) like lower(:criteria) or lower(p.localidade.cidade) like lower(:criteria)")
     Page<UUID> findIds(@Param("criteria") String criteria, Pageable pageable);
 
     @Override

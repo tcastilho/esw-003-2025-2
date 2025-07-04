@@ -17,8 +17,6 @@ import java.util.UUID;
 @RestController
 public class PacoteController {
     @Autowired
-    private PacoteRepository repository;
-
     private final PacoteService pacoteService;
 
     public PacoteController(PacoteService pacoteService) {
