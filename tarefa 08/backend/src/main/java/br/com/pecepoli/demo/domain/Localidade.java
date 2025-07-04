@@ -22,6 +22,7 @@ public class Localidade {
     @Column(name = "ESTADO")
     private String estado;
 
+    public UUID getId() { return id; }
     public String getCidade() { return cidade; }
     public String getEstado() { return estado; }
 

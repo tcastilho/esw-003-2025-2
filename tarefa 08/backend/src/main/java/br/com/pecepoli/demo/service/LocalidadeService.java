@@ -21,7 +21,7 @@ public class LocalidadeService {
         Page<UUID> ids = findIds(criteria, pageable);
         List<Localidade> localidades = this.repository.findAllById(ids.toSet());
 
-        return new PageImpl<>(localidades, pageable, ids.getTotalElements());
+        return new PageImpl<>(localidades, ids.getPageable(), ids.getTotalElements());
     }
 
     private Page<UUID> findIds(String criteria, Pageable pageable) {
