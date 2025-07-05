@@ -1,6 +1,7 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
 import Criteria from "../criteria/Criteria.js";
 import LocalidadesGrid from "./LocalidadesGrid.js"
+import Paginacao from '../paginacao/Paginacao.js'
 
 import styled from 'styled-components';
 
@@ -24,7 +25,7 @@ function Localidades(props) {
       navigate("/localidades");
     }
   };
-  const dados = useLoaderData();
+  const { content: localidades = [], number: currentPage, totalPages } = useLoaderData();
 
   return (
     <div>
@@ -32,19 +33,20 @@ function Localidades(props) {
         <label>Critério</label>
         <Criteria setCriteria={setCriteria}/>
       </CriteriaWapper>
-      <Data dados={dados}/>
+      <Data dados={localidades}/>
+      <Paginacao currentPage={currentPage} totalPages={totalPages}/>
     </div>
   )
 }
 
 function Data(props) {
   const { dados } = props;
-  if (dados.length === 0) {
+  if (!dados || dados.length === 0) {
      return (
        <Message>Nenhuma localidade carregada</Message>
      );
   } else {
-     return <LocalidadesGrid dados={dados}/>
+     return <LocalidadesGrid dados={dados}/>;
   }
 }
 
