@@ -43,7 +43,7 @@ public class DatabasePopulator {
     private List<Pacote> populatePacotes(List<Localidade> localidades) {
         List<Pacote> pacotes = new ArrayList<>(numeroPacotes);
         for (int i=0; i<numeroPacotes; i++) {
-            pacotes.add(fakerFacade.pacoteDummy(localidades.get(0)));
+            pacotes.add(fakerFacade.pacoteDummy(localidades.get(i)));
         }
         return this.pacoteRepository.saveAll(pacotes);
     }

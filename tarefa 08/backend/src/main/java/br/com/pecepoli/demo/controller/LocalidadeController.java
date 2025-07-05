@@ -20,14 +20,14 @@ public class LocalidadeController {
     public LocalidadeController(LocalidadeService localidadeService) {this.localidadeService = localidadeService;}
 
     @RequestMapping(method = RequestMethod.GET, value ="/localidades")
-    public ResponseEntity<List<Localidade>> obterTodos(@RequestParam(name =  "q", required = false) String criteria, Pageable pageable) {
+    public ResponseEntity<Page<Localidade>> obterTodos(@RequestParam(name =  "q", required = false) String criteria, Pageable pageable) {
         Page<Localidade> localidades = this.localidadeService.obterLocalidades(criteria, pageable);
 
         return ResponseEntity
                 .ok()
                 .header("Access-Control-Allow-Headers", "*")
                 .header("X-Total-Count", String.valueOf(localidades.getTotalElements()))
-                .body(localidades.toList());
+                .body(localidades);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/localidades/{id}")
