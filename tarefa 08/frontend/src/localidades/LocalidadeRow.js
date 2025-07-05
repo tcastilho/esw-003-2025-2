@@ -19,33 +19,27 @@ const DataCell = styled.td`
   padding-bottom: 12px;
 `;
 
-const DescricaoCell = styled(DataCell)`
+const CidadeCell = styled(DataCell)`
   padding-left: 12px;
 `;
 
-const LocalidadeCell = styled(DataCell)`
+const EstadoCell = styled(DataCell)`
   text-align: center;
 `;
 
-const ValorCell = styled(DataCell)`
-  text-align: right;
-  padding-right: 12px;
-`;
-
 function PacoteRow(props) {
-  const { pacote } = props;
+  const { localidade } = props;
   const navigate = useNavigate();
 
-  const selectPacote = () => {
-    navigate(`/pacotes/${pacote.id}`);
+  const selectLocalidade = () => {
+    navigate(`/localidades/${localidade.id}`);
   }
 
   return (
-    <DataRow onClick={selectPacote}>
+    <DataRow onClick={selectLocalidade}>
       <tr>
-        <DescricaoCell>{pacote.descricao}</DescricaoCell>
-        <LocalidadeCell>{pacote.localidade.cidade}</LocalidadeCell>
-        <ValorCell>{String(`R$\u00A0${pacote.valor.toFixed(2)}`)}</ValorCell>
+        <CidadeCell>{localidade.cidade}</CidadeCell>
+        <EstadoCell>{localidade.estado}</EstadoCell>
       </tr>
 
     </DataRow>

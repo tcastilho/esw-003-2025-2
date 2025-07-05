@@ -6,7 +6,7 @@ const PacotesTable = styled.table`
   border-collapse: collapse;
 `;
 
-const HeaderRow = styled.tr`
+const HeaderRow = styled.thead`
   height: 46px;
   border-bottom: 1px solid;
 `;
@@ -29,7 +29,7 @@ const ValorCell = styled(HeaderCell)`
 
 function PacotesGrid(props) {
   const { dados } = props;
-  const rows = dados.map((x) => (<PacoteRow pacote={x}/>))
+  const rows = dados.map((x, index) => (<PacoteRow key={index} pacote={x}/>))
 
   return (
       <PacotesTable>
@@ -42,9 +42,11 @@ function PacotesGrid(props) {
 function PacotesTableHeader() {
   return (
     <HeaderRow>
-      <DescricaoCell>Descrição</DescricaoCell>
-      <LocalidadeCell>Localidade</LocalidadeCell>
-      <ValorCell>Preço</ValorCell>
+      <tr>
+        <DescricaoCell>Descrição</DescricaoCell>
+        <LocalidadeCell>Localidade</LocalidadeCell>
+        <ValorCell>Preço</ValorCell>
+      </tr>
     </HeaderRow>
   )
 }

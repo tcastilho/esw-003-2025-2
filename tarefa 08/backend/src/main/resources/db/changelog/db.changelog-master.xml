@@ -153,4 +153,14 @@
             <column name="pacote_id"/>
         </createIndex>
     </changeSet>
+
+    <changeSet id="20250704161300" author="giordano26">
+        <renameColumn tableName="localidades" oldColumnName="descricao" newColumnName="cidade"/>
+    </changeSet>
+
+    <changeSet id="20250704162300" author="Giordano26">
+        <addColumn tableName="localidades">
+            <column name="estado" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
  </databaseChangeLog>
