@@ -14,7 +14,13 @@ public class PacoteService {
         this.repository = repository;
     }
 
-    public List<Pacote> obterPacotes() {
-        return this.repository.findAll();
+    public List<Pacote> obterPacotes(String criteria) {
+        if(criteria == null){
+            return this.repository.findAll();
+        }
+
+        return this.repository.findAll(criteria);
     }
+
+
 }
