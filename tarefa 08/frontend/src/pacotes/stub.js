@@ -1,10 +1,21 @@
+async function loadPacotes(criteria, page, size) {
+  let query = '';
+  if(criteria){
+    query = `q=${criteria}&`;
+  }
 
-async function loadPacotes(criteria) {
-    const response = await fetch(endpointFor(criteria));
-    const data = await response.json();
-    console.log(`Carregado pacotes (payload : ${data})`);
-    return data;
-  
+  const pagination = new URLSearchParams({
+    page: page,
+    size: size,
+  }).toString();
+
+  const response = await fetch(`http://localhost:8080/pacotes?${query}${pagination}`);
+  if (!response.ok) {
+    throw new Error('Falha ao buscar pacotes');
+  }
+
+  const pageData = await response.json();
+  return pageData;
 }
 
 async function loadPacote(id) {
@@ -16,15 +27,4 @@ async function loadPacote(id) {
 
 }
 
-
-function endpointFor(criteria) {
-  const endpoint = "http://localhost:8080/pacotes";
-
-  if (criteria) {
-    return `${endpoint}?q=${criteria}`
-  } else {
-    return endpoint;    
-  }
-}
-  
 export { loadPacotes, loadPacote };

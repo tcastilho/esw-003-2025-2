@@ -17,8 +17,6 @@ import java.util.UUID;
 @RestController
 public class PacoteController {
     @Autowired
-    private PacoteRepository repository;
-
     private final PacoteService pacoteService;
 
     public PacoteController(PacoteService pacoteService) {
@@ -26,12 +24,12 @@ public class PacoteController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/pacotes")
-    public ResponseEntity<List<Pacote>> obterTodos(@RequestParam(name = "q", required = false) String criteria, Pageable pageable) {
+    public ResponseEntity<Page<Pacote>> obterTodos(@RequestParam(name = "q", required = false) String criteria, Pageable pageable) {
         Page<Pacote> pacotes = this.pacoteService.obterPacotes(criteria, pageable);
         return ResponseEntity.ok()
                              .header("Access-Control-Allow-Headers", "*")
                              .header("X-Total-Count", String.valueOf(pacotes.getTotalElements()))
-                             .body(pacotes.toList());
+                             .body(pacotes);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/pacotes/{id}")
