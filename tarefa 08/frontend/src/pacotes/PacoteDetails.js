@@ -2,13 +2,13 @@ import { useLoaderData } from 'react-router-dom';
 import styled from 'styled-components';
 
 const ItemDetails = styled.section`
-    box-shadow: 0 1px 2px rgba(0,0,0,0.07), 
-                0 2px 4px rgba(0,0,0,0.07), 
-                0 4px 8px rgba(0,0,0,0.07), 
+    box-shadow: 0 1px 2px rgba(0,0,0,0.07),
+                0 2px 4px rgba(0,0,0,0.07),
+                0 4px 8px rgba(0,0,0,0.07),
                 0 8px 16px rgba(0,0,0,0.07),
-                0 16px 32px rgba(0,0,0,0.07), 
+                0 16px 32px rgba(0,0,0,0.07),
                 0 32px 64px rgba(0,0,0,0.07);
-    
+
     float: left;
     flex: 1;
     margin: 10px;
@@ -17,13 +17,13 @@ const ItemDetails = styled.section`
     h3 {
         text-align: center;
         margin-top: 2px;
-    
+
     }
     div {
         display: grid;
     }
 `
- 
+
 const Items = styled.div`
     display: flex;
 `
@@ -35,7 +35,7 @@ const ItemDetail = styled.div`
 `
 
 const DetailSection = styled.section`
-    
+
     h2 {
         font-size: 18px;
     }
@@ -62,14 +62,14 @@ function PacoteDetails(props) {
             <ItemDetail>
                 <label>Descrição</label>
                 <span>{pacote.descricao}</span>
-            </ItemDetail>        
+            </ItemDetail>
             <ItemDetail>
                 <label>Localidade</label>
                 <span>{pacote.localidade.descricao}</span>
-            </ItemDetail>        
+            </ItemDetail>
             <ItemDetail>
                 <label>Valor Total</label>
-                <span>R$ {pacote.valor}</span>
+                <span>R$ {String(pacote.valor.toFixed(2))}</span>
             </ItemDetail>
         </section>
         <DetailSection>
