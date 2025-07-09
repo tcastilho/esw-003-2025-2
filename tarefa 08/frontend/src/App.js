@@ -25,7 +25,7 @@ const router = createBrowserRouter([
         const url = new URL(request.url);
         const criteria = url.searchParams.get('q');
         const page = url.searchParams.get('page') ?? '0';
-        const size = url.searchParams.get('size') ?? '15';
+        const size = 15;
         return loadPacotes(criteria, page, size);
       },
       element: <Pacotes/>
